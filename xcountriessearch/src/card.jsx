@@ -25,22 +25,25 @@ const OneCard = ({ name, flag }) => {
         }}
         alt={`Flag of ${name}`}
       />
-      <h2>{name}</h2> {/* Updated to match test expectations */}
+      <h2>{name}</h2>
     </div>
   );
 };
 
 const Card = ({ data, search }) => {
-  const filteredData = data.filter((i) =>
-    search.trim() === "" || i.common.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredData = data.filter((i) => {
+    const searchTerm = search.trim().toLowerCase();
+    return searchTerm === "" || i.common.toLowerCase().includes(searchTerm);
+  });
+
+  const uniqueData = [...new Map(filteredData.map((item) => [item.common, item])).values()];
 
   return (
     <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
-      {filteredData.length === 0 ? (
-        <p>No results found</p> // Added a "no results" message
+      {uniqueData.length === 0 ? (
+        <p>No results found</p>
       ) : (
-        filteredData.map((i) => (
+        uniqueData.map((i) => (
           <OneCard key={i.common} name={i.common} flag={i.png} />
         ))
       )}
