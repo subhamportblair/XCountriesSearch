@@ -1,8 +1,9 @@
 import React from "react";
 
-const OneCard = ({ name, flag, abbr }) => {
+const OneCard = ({ name, flag }) => {
   return (
     <div
+    className="countryCard"
       style={{
         display: "flex",
         flexDirection: "column",
