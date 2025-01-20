@@ -3,7 +3,7 @@ import React from "react";
 const OneCard = ({ name, flag }) => {
   return (
     <div
-    className="countryCard"
+      className="countryCard"
       style={{
         display: "flex",
         flexDirection: "column",
@@ -25,35 +25,25 @@ const OneCard = ({ name, flag }) => {
         }}
         alt={`Flag of ${name}`}
       />
-      <h5>{name}</h5>
+      <h2>{name}</h2> {/* Updated to match test expectations */}
     </div>
   );
 };
 
 const Card = ({ data, search }) => {
-  /*const dummyData = {
-    name: "subham",
-    age: "24",
-    photo:
-      "https://www.londondentalsmiles.co.uk/wp-content/uploads/2017/06/person-dummy.jpg",
-  };*/
+  const filteredData = data.filter((i) =>
+    search.trim() === "" || i.common.toLowerCase().includes(search.toLowerCase())
+  );
 
   return (
     <div style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}>
-      {data
-        .filter((i) => {
-          return search.toLowerCase() === ""
-            ? i
-            : i.common.toLowerCase().includes(search);
-        })
-        .map((i) => (
-          <OneCard
-            key={i.common}
-            name={i.common}
-            flag={i.png}
-            abbr={i.common}
-          />
-        ))}
+      {filteredData.length === 0 ? (
+        <p>No results found</p> // Added a "no results" message
+      ) : (
+        filteredData.map((i) => (
+          <OneCard key={i.common} name={i.common} flag={i.png} />
+        ))
+      )}
     </div>
   );
 };
